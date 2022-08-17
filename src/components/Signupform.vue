@@ -15,10 +15,19 @@
 
         <label>Skills:</label>
         <input type="text" v-model="tempSkill" @keyup.alt="addSkills">
+        <div v-for="skill in skills" key="skill" class="pill">
+        <span @click="deleteSkills(skill)"> {{skill}}</span>
+        </div>
+
 
         <div class="terms">
             <input type="checkbox"  v-model="terms" required>
             <label>I accept all terms and requirements</label>
+        </div>
+
+        <div class="submit">
+            <button>Create an account</button>
+
         </div>
      </form>
 
@@ -32,9 +41,27 @@
                 password:'',
                 role:'Developer',
                 terms:false,
+                skills:[],
                 tempSkill:'',
-                addSkills:[]
+                
             }
+        },
+        methods :{
+            addSkills(e){
+                if(e.key===','&&this.tempSkill){
+                    if(!this.skills.includes(this.tempSkill)){
+                        this.skills.push(this.tempSkill)
+                    }
+                    this.tempSkill=''
+                }
+
+            },
+            deleteSkills(skill){
+                this.skills=this.skills.filter((item)=>{
+                    return skill !==item
+                })
+            }
+
         }
     }
 
@@ -73,6 +100,29 @@
         margin: 0 10px 0 0;
         position: relative;
         top: 2px;
+   }
+   .pill {
+    display: inline-block;
+    margin: 20px 10px 0 0;
+    padding: 6px 12px;
+    background: #eee;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: #777;
+    cursor: pointer;
+  }
+  button {
+    background: #0b6dff;
+    border: 0;
+    padding: 10px 20px;
+    margin-top: 20px;
+    color: white;
+    border-radius: 20px;
+  }
+  .submit {
+    text-align: center;
   }
 
 </style>
